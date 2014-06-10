@@ -17,11 +17,13 @@ In order to separate the logic that retrieves the data and maps it to the entity
 
 # Business and Domain model
 
-## Domain model
+## Java classes comparision
+
+![Alt text](/README/image/business-to-domain-model.png?raw=true "Repository pattern")
 
 ## Mapping
 
-The mapping from business model to domain model and vice versa is performed by [I'm an inline-style link](http://modelmapper.org/). It is a ligthweight java library which automatically determining how one object model maps to another.
+The mapping from business model to domain model and vice versa is performed by [modelmapper](http://modelmapper.org/). It is a ligthweight java library which automatically determining how one object model maps to another.
 
 ```java 
 ModelMapper mapper = new ModelMapper();
