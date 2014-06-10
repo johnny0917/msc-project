@@ -14,3 +14,17 @@ The solution is using different databases, SQL and NoSQL as well. The main purpo
 In order to separate the logic that retrieves the data and maps it to the entity model from the business logic that acts on the model the repository pattern is used. The business logic should be agnostic to the type of data that comprises the data source layer.
 
 ![Alt text](/README/image/repository-pattern.png?raw=true "Repository pattern")
+
+# Business and Domain model
+
+## Domain model
+
+## Mapping
+
+The mapping from business model to domain model and vice versa is performed by [I'm an inline-style link](http://modelmapper.org/). It is a ligthweight java library which automatically determining how one object model maps to another.
+
+```java 
+ModelMapper mapper = new ModelMapper();
+Course businessObject = getCourse();
+SpringMongoCourse domainObject = mapper.map(course, SpringMongoCourse.class));
+```
