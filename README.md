@@ -194,6 +194,31 @@ TODO: Fill in
 
 #### Domain model
 
+We need to define domain model with spring mongodb annotations. For example:
+
+```java
+@Document
+public class SpringMongoCourse {
+    @Id
+    private Long id;
+    
+    private String name;
+    
+    @Transient
+    private Set<SpringMongoEnrollment> enrollments = new HashSet<>();
+    
+    @DBRef
+    private SpringMongoOffice office;
+
+    private Date date;
+    
+    @DBRef
+    private SpringMongoInstructor instructor;
+	
+	... GETTERS AND SETTERS ...
+}
+```
+
 #### Repositories
 
 #### Queries
@@ -202,6 +227,36 @@ TODO: Fill in
 
 #### Domain model
 
+We need to define domain model with spring neo4j annotations. For example:
+
+```java
+@NodeEntity
+public class SpringNeo4jCourse {
+
+    @GraphId
+    private Long id;
+
+    private String name;
+
+    @RelatedToVia(type = "ENROLLMENT", direction = Direction.INCOMING)
+    private Set<SpringNeo4jEnrollment> enrollments = new HashSet<>();
+
+    @RelatedTo
+    @Fetch
+    private SpringNeo4jOffice office;
+
+    private Date date;
+
+    @RelatedTo
+    @Fetch
+    private SpringNeo4jInstructor instructor;
+	
+	... GETTERS AND SETTERS ...
+}
+```
+
 #### Repositories
 
 #### Queries
+
+# Testing data access layer
