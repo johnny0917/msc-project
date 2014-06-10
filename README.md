@@ -47,6 +47,37 @@ There are six main abstract repositories defined as a Java interfaces:
 
 ### Hibernate OGM
 
+#### Domain model
+
+There is one domain model for each datastore (MongoDB, Neo4j, PostgreSQL) and it is using JPA annotations, for example:
+
+```java
+@Entity
+public class HbCourse {
+    @Id
+    private Long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<HbEnrollment> enrollments = new HashSet<>();
+
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    @ManyToOne
+    private HbOffice office;
+    
+    @ManyToOne
+    private HbInstructor instructor;
+
+	... GETTERS AND SETTERS... 
+}
+```
+
+Due to this we have domain model independent from database vendor.
+
+#### Repositories
 Hibernate OGM acts as a JPA implementation provider for NoSQL datastores. There is a base class called **HbRepository** which implements basic CRUD operations for an entity. It is using plain JPA and EntityManager interface to access datastore.
 
 ```java
@@ -154,3 +185,9 @@ public class HbPostgresqlCourseRepository extends HbCourseRepository  {
     
 }
 ```
+
+
+
+### Sprng data mongodb
+
+### Spring data neo4j
