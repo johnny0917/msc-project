@@ -44,3 +44,72 @@ There are six main abstract repositories defined as a Java interfaces:
 ### General overview
 
 ![Alt text](/README/image/repository-implementation.png?raw=true "Repository pattern")
+
+### Hibernate OGM
+
+Hibernate OGM acts as a JPA implementation provider for NoSQL datastores. There is a base class called **HbRepository** which implements basic CRUD operations for an entity.
+
+```java
+public abstract class HbRepository<E, K>  {
+    private final Class<E> entityClass;
+    
+    @Autowired
+    private EntityManager entityManager;
+    
+    public HbRepository(Class<E> entityClass) {
+        this.entityClass = entityClass;
+    }
+    
+    protected void addEntity(E entity) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(entity);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+    }
+    
+    protected E findEntity(K id) {
+        entityManager.getTransaction().begin();
+        E entity = entityManager.find(entityClass, id);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+        return entity;
+    }
+    
+    protected void removeEntity(K id) {
+        entityManager.getTransaction().begin();
+        E entity = entityManager.find(entityClass, id);
+        entityManager.remove(entity);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+    }
+    
+    protected void updateEntity(E entity) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+    }
+    
+    protected void close() {
+        if (entityManager.isOpen()) {
+            entityManager.close();
+        }
+    }
+}
+```
+
+Every particular repository is inheriting from HbRepository:
+
+```java
+@Repository
+public class HbNeo4jCourseRepository extends HbCourseRepository {
+
+}
+```
+
+```java
+@Repository
+public class HbMongoCourseRepository extends HbCourseRepository {
+
+}
+```
