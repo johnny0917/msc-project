@@ -30,3 +30,17 @@ ModelMapper mapper = new ModelMapper();
 Course businessObject = getCourse();
 SpringMongoCourse domainObject = mapper.map(course, SpringMongoCourse.class));
 ```
+
+# Repositories definitions
+
+## Abstract
+
+There are six main abstract repositories defined as a Java interfaces:
+
+![Alt text](/README/image/repository.png?raw=true "Repository pattern")
+
+## Implementations
+
+### General overview
+
+![Alt text](/README/image/repository-implementation.png?raw=true "Repository pattern")
