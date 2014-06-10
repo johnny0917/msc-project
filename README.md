@@ -186,8 +186,22 @@ public class HbPostgresqlCourseRepository extends HbCourseRepository  {
 }
 ```
 
+#### Queries
 
+TODO: Fill in
 
 ### Sprng data mongodb
 
+#### Domain model
+
+#### Repositories
+
+#### Queries
+
 ### Spring data neo4j
+
+#### Domain model
+
+#### Repositories
+
+#### Queries
