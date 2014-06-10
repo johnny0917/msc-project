@@ -47,7 +47,7 @@ There are six main abstract repositories defined as a Java interfaces:
 
 ### Hibernate OGM
 
-Hibernate OGM acts as a JPA implementation provider for NoSQL datastores. There is a base class called **HbRepository** which implements basic CRUD operations for an entity.
+Hibernate OGM acts as a JPA implementation provider for NoSQL datastores. There is a base class called **HbRepository** which implements basic CRUD operations for an entity. It is using plain JPA and EntityManager interface to access datastore.
 
 ```java
 public abstract class HbRepository<E, K>  {
@@ -98,7 +98,41 @@ public abstract class HbRepository<E, K>  {
 }
 ```
 
-Every particular repository is inheriting from HbRepository:
+Then HbRepository is used in every particular repository implementation. Beacuse HbRepository is a generic class, we need to specify entity and primary key type.
+
+```java
+public abstract class HbCourseRepository  extends HbRepository<HbCourse, Long> implements CourseRepository  {
+    private static ModelMapper mapper = new ModelMapper();
+    
+    public HbCourseRepository() {
+        super(HbCourse.class);
+    }
+
+    @Override
+    public void add(Course entity) {
+        addEntity(mapper.map(entity, HbCourse.class));
+    }
+
+    @Override
+    public Course find(Long key) {
+        HbCourse entity = findEntity(key);
+        if(entity == null) return null;
+        return mapper.map(entity, Course.class);
+    }
+
+    @Override
+    public void remove(Long key) {
+        removeEntity(key);
+    }
+
+    @Override
+    public void update(Course entity) {
+        updateEntity(mapper.map(entity, HbCourse.class));
+    }
+}
+```
+
+There is a concrete implementation of repository for each database: Neo4j, MongoDB, PostgreSQL. They will contatin vendor specific code if needed.
 
 ```java
 @Repository
@@ -111,5 +145,12 @@ public class HbNeo4jCourseRepository extends HbCourseRepository {
 @Repository
 public class HbMongoCourseRepository extends HbCourseRepository {
 
+}
+```
+
+```java
+@Repository
+public class HbPostgresqlCourseRepository extends HbCourseRepository  {
+    
 }
 ```
