@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="hibernate-neo4j-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+        <class>kieras.rafal.mgr.repository.hibernate.entity.HbDepartment</class>
+        <class>kieras.rafal.mgr.repository.hibernate.entity.HbCourse</class>
+        <class>kieras.rafal.mgr.repository.hibernate.entity.HbOffice</class>
+        <class>kieras.rafal.mgr.repository.hibernate.entity.HbEnrollment</class>
+        <class>kieras.rafal.mgr.repository.hibernate.entity.HbStudent</class>
+        <class>kieras.rafal.mgr.repository.hibernate.entity.HbInstructor</class>
+        <properties>
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.ogm.datastore.neo4j.transaction.impl.Neo4jJtaPlatform"/>
+            <property name="hibernate.ogm.datastore.provider" value="neo4j_embedded"/>
+            <property name="hibernate.ogm.neo4j.database_path" value="target\neo4j\school"/>
+        </properties>
+    </persistence-unit>
+</persistence>
